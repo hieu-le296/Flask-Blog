@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title> TECH TALKS! </title>
+
+  <link href="../static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+  <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic'
+    rel='stylesheet' type='text/css'>
+
+  <link href="../static/vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
+
+  <link href="../static/css/creative.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand js-scroll-trigger" href="{{url_for('core.index')}}"> Tech Talks </a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+        data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto my-2 my-lg-0">
+          <li class='nav-link'>
+            <a href="{{url_for('core.index')}}"> Home </a>
+          </li>
+          {% if current_user.is_authenticated %}
+          <li class='nav-link'>
+            <a href="{{url_for('blog_posts.create_post')}}"> Post </a>
+          </li>
+          <li class='nav-link'>
+            <a href="{{url_for('users.account')}}"> Account </a>
+          </li>
+          <li class='nav-link'>
+            <a href="{{url_for('users.logout')}}"> Log Out </a>
+          </li>
+
+          {% else %}
+          </li>
+          <li class='nav-link'>
+            <a href="{{url_for('users.login')}}"> Login </a>
+          </li>
+          <li class='nav-link'>
+            <a href="{{url_for('users.register')}}"> Register </a>
+          </li>
+          {% endif %}
+          <li class='nav-link'>
+            <a href="{{url_for('core.info')}}"> About </a>
+          </li>
+          <li class='nav-link'>
+              <a href="{{url_for('core.donation')}}"> Donation </a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  {% block div %}
+  {% endblock %}
+  <script src="../static/vendor/jquery/jquery.min.js"></script>
+  <script src="../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <script src="../static/vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="../static/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+
+  <script src="../static/js/creative.js"></script>
+
+</body>
+
+</html>

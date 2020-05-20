@@ -1,0 +1,9 @@
+# Dockerfile-flask
+# We simply inherit the Python 3 image. This image does
+# not particularly care what OS runs underneath
+FROM python:3.7
+COPY . /code
+WORKDIR /code
+RUN pip install -r requirements.txt
+ENV FLASK_APP app.py
+CMD [ "uwsgi", "--ini", "app.ini" ]

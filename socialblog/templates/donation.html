@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block div %}
+
+<header class="masthead_donation">
+     <div class="container h-100">
+    <div class="row h-100 align-items-center justify-content-center text-center">
+        <div class="col-lg-10 align-self-end">
+            <h1 class="text-uppercase text-white font-weight-bold"> Welcome to our Donation Page </h1>
+            <hr class="divider my-4">
+        </div>
+        <div class="col-lg-8 align-self-baseline">
+            <p class="text-white-75 font-weight-light mb-5">Would you like to donate our website?</p>
+            <form action="{{ url_for('core.payment') }}" method="POST">
+                    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key={{public_key}}
+                        data-amount="199" data-name="Tech Talk" data-image= {{ url_for('static', filename='profile_pics/default.png') }} data-description="Donation" data-locale="auto" data-currency='CAD'
+                        data-zip-code="true">
+            
+                        </script>
+            </form>
+        </div>
+    </div>
+
+    {% endblock %}
+
+</header>

@@ -1,0 +1,21 @@
+# docker-compose.yml
+version: '3'
+services:
+  flask:
+    restart: always
+    image: webapp-flask
+    build:
+      context: .
+      dockerfile: Dockerfile-flask
+    volumes:
+      - "./:/code"
+  nginx:
+    restart: always
+    image: webapp-nginx
+    build:
+      context: .
+      dockerfile: Dockerfile-nginx
+    ports:
+      - 5000:80
+    depends_on:
+      - flask

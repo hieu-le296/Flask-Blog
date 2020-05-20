@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block div %}
+<header class="masthead_reset">
+  <div class="container h-100">
+    <div class="row h-100 align-items-center justify-content-center text-center">
+      <div class="col-lg-10 align-self-end">
+        <h1 class="text-uppercase text-white font-weight-bold"> Reset Password </h1>
+        <hr class="divider my-4">
+      </div>
+      <div class="col-lg-8 align-self-baseline">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <ul class="flashes">
+          {% for category, message in messages %}
+          <div class="{{ category }}" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            {{ message }}
+          </div>
+        </ul>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <form class="form-signin" method="POST">
+          <div class="form-label-group">
+            {{ form.hidden_tag() }}
+            {{ form.email(class="form-control") }}
+            <label style="font-size: 15px">Email address</label>
+          </div>
+          {{ form.submit(class="btn btn-lg btn-primary btn-block text-uppercase") }}
+        </form>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block div %}
+<!-- Masthead -->
+<header class="masthead">
+  <div class="container h-100">
+
+
+    <div class="row h-100 align-items-center justify-content-center text-center">
+      <div class="col-lg-10 align-self-end">
+        <h1 class="text-uppercase text-white font-weight-bold"> Tech Talks! </h1>
+        <hr class="divider my-4">
+      </div>
+      <div class="col-lg-8 align-self-baseline">
+        <p class="text-white-75 font-weight-light mb-5"> Tech Talks blog keeps you up to date with latest and cool
+          technology stuff! </p>
+        <p class="text-white-75 font-weight-light mb-5"> Scroll down to see Tech Posts! </p>
+        <a class="btn btn-primary btn-xl js-scroll-trigger" href="{{url_for('blog_posts.create_post')}}"> Create Post!
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+  <ul class="flashes">
+    {% for category, message in messages %}
+    <div class="{{ category }}" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      {{ message }}
+    </div>
+  </ul>
+  {% endfor %}
+  {% endif %}
+  {% endwith %}
+  {# Go through each blog post #}
+  {% for post in blog_posts.items %}
+
+  <div class="card">
+
+    <div class="card-body">
+
+      <h2><a class="card-title" href="{{ url_for('blog_posts.blog_post', blog_post_id=post.id) }}">{{ post.title }}</a>
+      </h2>
+      <p class="text-muted">Posted by: <img style="height: 30px; width: 30px;" class="rounded-circle account-img"
+          src="{{ url_for('static', filename='profile_pics/' + post.author.profile_image) }}" alt=""> <a
+          class="postedby"
+          href="{{ url_for('users.user_posts', username=post.author.username) }}">{{ post.author.username }}</a></p>
+      <p class="text-muted">Published on: {{ post.date.strftime("%B %d, %Y") }}</p>
+      <p class="card-text article-content">{{ post.text[:100] }}...</p>
+      <a style="border-radius: 40px;" href="{{ url_for('blog_posts.blog_post', blog_post_id=post.id) }}"
+        class="btn btn-primary"> Read Post! </a>
+    </div>
+  </div>
+
+  {% endfor %}
+
+  <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+      {% for page_num in blog_posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+      {% if blog_posts.page == page_num %}
+      <li class="page-item disabled">
+        <a class="page-link" href="{{ url_for('core.index', page=page_num) }}">{{ page_num }}</a></li>
+      </li>
+      {% else %}
+      <li class="page-item"><a class="page-link" href="{{ url_for('core.index', page=page_num) }}">{{ page_num }}</a>
+      </li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </nav>
+
+  {% endblock %}
+</div>
+
+</header>

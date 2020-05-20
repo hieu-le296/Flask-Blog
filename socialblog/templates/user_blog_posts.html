@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block div %}
+
+<!-- Masthead -->
+
+<header style="background-image: url({{ url_for('static', filename='profile_pics/' + user.profile_cover) }});"
+    class="masthead_post">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center justify-content-center text-center">
+            <div class="col-lg-10 align-self-end">
+                <img style="height: 200px; width: 200px;" class="rounded-circle account-img"
+                    src="{{ url_for('static', filename='profile_pics/' + user.profile_image) }}" alt="">
+                <h1 class="text-uppercase text-white font-weight-bold"> {{ user.username }} </h1>
+                <h4 style="color:white">Welcome to the Page of {{ user.username }}</h4>
+                <hr class="divider my-4">
+            </div>
+            <div class="col-lg-8 align-self-baseline">
+                <p class="text-white-75 font-weight-light mb-5"> Scroll down to see the {{user.username}}'s Posts! </p>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="jumbotron">
+            {% for post in blog_posts.items %}
+            <div class="card">
+                <div class="card-body">
+                    <h2><a class="card-title"
+                            href="{{ url_for('blog_posts.blog_post', blog_post_id = post.id) }}">{{ post.title }}</a>
+                    </h2>
+
+                    <p class="text-muted">Posted By:<a class="postedby"
+                            href="{{ url_for('users.user_posts', username = post.author.username) }}">{{ post.author.username}}</a>
+                    </p>
+                    <p class="text-muted"> Published on: {{ post.date.strftime("%B %d, %Y")}}</p>
+                    <br>
+                    <p class="article-content">{{ post.text[:100] }}...</p>
+                    <br>
+                </div>
+
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+
+
+    <div class="container">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                {% for page_num in blog_posts.iter_pages(left_edge = 1, right_edge = 1, left_current = 1, right_current=2) %}
+                {% if blog_posts.page == page_num %}
+                <li class="page-item disabled">
+                    <a class="page-link"
+                        href="{{ url_for('users.user_posts', username = user.username, page = page_num) }}">{{ page_num }}</a>
+
+                </li>
+                {% else %}
+                <li class="page-item">
+                    <a class="page-link"
+                        href="{{ url_for('users.user_posts', username = user.username, page = page_num) }}">{{ page_num }}</a>
+
+                </li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+
+        </nav>
+    </div>
+
+
+
+    {% endblock %}
+</header>

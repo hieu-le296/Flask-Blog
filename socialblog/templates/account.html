@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block div %}
+<!-- Masthead -->
+
+<div class="account-background-image"
+    style="background-image: url({{ url_for('static', filename='profile_pics/' + current_user.profile_cover) }});">
+    <div class="container" align='center'>
+        <img style="height: 200px; width: 200px;" class="rounded-circle account-img"
+            src="{{ url_for('static', filename='profile_pics/' + current_user.profile_image) }}" alt="">
+
+
+    </div>
+    <br>
+    <div class="container">
+        <div class="jumbotron">
+            <div align='center'>
+                <h4>{{ current_user.username }}</h5>
+                    <p>Email: {{ current_user.email }}</p>
+            </div>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <ul class="flashes">
+                {% for category, message in messages %}
+                <div class="{{ category }}" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {{ message }}
+                </div>
+            </ul>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+            <form method="POST" action="" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+                <div class="form-group">
+                    {{ form.username.label(class ='form-group') }}
+                    {{ form.username(class='form-control') }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.email.label(class ='form-group') }}
+                    {{ form.email(class='form-control') }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.picture.label(class ='form-group') }}
+                    {{ form.picture(class='form-control') }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.picture_cover.label(class ='form-group') }}
+                    {{ form.picture_cover(class='form-control') }}
+                </div>
+
+                <div style="float:left;" class="form-group">
+                    {{ form.submit(class='btn btn-primary', style='border-radius: 40px;') }}
+                </div>
+
+                <button style="float:right; border-radius: 40px;" type="button" class="btn btn-danger"
+                    data-toggle="modal" data-target="#del_modal" name="button">Delete
+                    your account</button>
+
+                <div class="modal" tabindex="-1" role="dialog" id="del_modal">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Delete Your Account</h5>
+                                <button  type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Are you sure that you want to delete account?.</p>
+                                <p>Deleting your account will remove all your posts</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button style="border-radius: 40px;" type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                <form action="{{ url_for('users.account') }}" method="POST">
+
+                                    {{ form.delete(class="btn btn-danger", style="border-radius: 40px;")}}
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+{% endblock %}
